@@ -44,8 +44,8 @@ export default function UnsupportedChain () {
 
     const providerTextList = {
       Metamask: 'Add/Change to Ropsten Testnet on Metamask',
-      imToken: 'Add/Change to Ropsten Mumbai Testnet on imToken',
-      Wallet: 'Add/Change to Ropsten Mumbai Testnet on Wallet'
+      imToken: 'Add/Change to Ropsten Testnet on imToken',
+      Wallet: 'Add/Change to Ropsten Testnet on Wallet'
     }
     return providerTextList[getProvider()]
   }
