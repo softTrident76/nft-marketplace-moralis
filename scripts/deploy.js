@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 const fs = require('fs')
 
 function replaceEnvContractAddresses (marketplaceAddress, nftAddress, networkName) {
-  const envFileName = '.env.local'
+  const envFileName = '.env'
   const envFile = fs.readFileSync(envFileName, 'utf-8')
   const env = dotenv.parse(envFile)
   env[`MARKETPLACE_CONTRACT_ADDRESS_${networkName}`] = marketplaceAddress

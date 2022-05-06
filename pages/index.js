@@ -15,9 +15,9 @@ export default function Home () {
   }, [isReady])
   async function loadNFTs () {
     if (!isReady) return
-    // const data = await marketplaceContract.fetchAvailableMarketItems()
-    // const items = await Promise.all(data.map(mapAvailableMarketItems(nftContract)))
-    // setNfts(items)
+    const data = await marketplaceContract.fetchAvailableMarketItems()
+    const items = await Promise.all(data.map(mapAvailableMarketItems(nftContract)))
+    setNfts(items)
     setIsLoading(false)
   }
 
