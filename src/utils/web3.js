@@ -32,5 +32,26 @@ export const chains = {
       url: 'https://mumbai.polygonscan.com',
       standard: 'EIP3091'
     }]
+  },
+  ropstenTestnet: {
+    name: 'ETH',
+    chain: 'ropsten',
+    rpc: [
+      'https://ropsten.infura.io/v3/'
+    ],
+    faucets: [
+      'https://faucet.polygon.technology/'
+    ],
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18
+    },
+    infoURL: 'https://ropsten.infura.io/v3/',
+    shortName: 'ROP',
+    chainId: 3,
+    networkId: 3,
+    explorers: []
   }
+
 }

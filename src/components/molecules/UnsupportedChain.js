@@ -19,13 +19,19 @@ async function addNetwork (chain, account) {
     },
     rpcUrls: chain.rpc,
     blockExplorerUrls: [((chain.explorers && chain.explorers.length > 0 && chain.explorers[0].url) ? chain.explorers[0].url : chain.infoURL)]
-  }
+  } 
+
+  window.ethereum.request({
+    method: "wallet_switchEthereumChain",
+    params: [{ chainId: params.chainId }]
+  })
+  return
 
   window.ethereum.request({
     method: 'wallet_addEthereumChain',
     params: [params, account]
   }).catch((error) => {
-    console.log(error)
+    // console.log(error)
   })
 }
 
@@ -50,7 +56,7 @@ export default function UnsupportedChain () {
       <Button
         variant='outlined'
         color='primary'
-        onClick={ () => addNetwork(chains.polygonMumbaiTestnet, account) }
+        onClick={ () => addNetwork(chains.ropstenTestnet, account) }
         sx={{
           maxWidth: 600,
           margin: 'auto',
