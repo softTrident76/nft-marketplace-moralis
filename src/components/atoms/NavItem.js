@@ -11,7 +11,7 @@ export default function NavItem ({ title, href, openNewTab }) {
         <Button
           component="a"
           target={openNewTab && '_blank'}
-          style={{
+          sx={{
             margin: 'auto 0',
             color: 'white',
             display: 'block',
