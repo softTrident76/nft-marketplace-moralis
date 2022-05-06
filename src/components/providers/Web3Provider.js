@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from 'react'
 import Web3Modal from 'web3modal'
 import { ethers } from 'ethers'
-// import NFT from '../../../artifacts/contracts/NFT.sol/NFT.json'
-// import Market from '../../../artifacts/contracts/Marketplace.sol/Marketplace.json'
+import NFT from '../../../artifacts/contracts/NFT.sol/NFT.json'
+import Market from '../../../artifacts/contracts/Marketplace.sol/Marketplace.json'
 import axios from 'axios'
 
 const contextDefaultValues = {
@@ -51,11 +51,12 @@ export default function Web3Provider ({ children }) {
         await initializeWeb3WithoutSigner()
         return
       }
-
+      
       let onAccountsChangedCooldown = false
       const web3Modal = new Web3Modal()
       const connection = await web3Modal.connect()
       setHasWeb3(true)
+
       const provider = new ethers.providers.Web3Provider(connection, 'any')
       await getAndSetWeb3ContextWithSigner(provider)
 
@@ -71,6 +72,7 @@ export default function Web3Provider ({ children }) {
       connection.on('accountsChanged', onAccountsChanged)
       connection.on('chainChanged', initializeWeb3)
     } catch (error) {
+      console.log(error)
       initializeWeb3WithoutSigner()
     }
   }
@@ -79,9 +81,11 @@ export default function Web3Provider ({ children }) {
     setIsReady(false)
     const signer = provider.getSigner()
     const signerAddress = await signer.getAddress()
+
     await getAndSetAccountAndBalance(provider, signerAddress)
     const networkName = await getAndSetNetwork(provider)
     const success = await setupContracts(signer, networkName)
+
     setIsReady(success)
   }
 
@@ -89,6 +93,8 @@ export default function Web3Provider ({ children }) {
     setIsReady(false)
     const networkName = await getAndSetNetwork(provider)
     const success = await setupContracts(provider, networkName)
+
+    console.log('getAndSetWeb3ContextWithoutSigner: ' + networkName)
     setIsReady(success)
   }
 
@@ -113,9 +119,9 @@ export default function Web3Provider ({ children }) {
       return false
     }
     const { data } = await axios(`/api/addresses?network=${networkName}`)
-    const marketplaceContract = new ethers.Contract(data.marketplaceAddress, Market.abi, signer)
+    const marketplaceContract = new ethers.Contract('0xe706e61d2EBBEaaa5F3d8a0A32e8588f0fD72a10' /*data.marketplaceAddress*/, Market.abi, signer)
     setMarketplaceContract(marketplaceContract)
-    const nftContract = new ethers.Contract(data.nftAddress, NFT.abi, signer)
+    const nftContract = new ethers.Contract('0x766C2D16E5eD2A42E11Ff646f15359547497C00D'/*data.nftAddress*/, NFT.abi, signer)
     setNFTContract(nftContract)
     return true
   }
