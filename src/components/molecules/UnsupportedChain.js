@@ -27,6 +27,7 @@ async function addNetwork (chain, account) {
   })
   return
 
+  // seito: it should implement for the future.
   window.ethereum.request({
     method: 'wallet_addEthereumChain',
     params: [params, account]
