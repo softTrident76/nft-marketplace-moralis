@@ -28,6 +28,7 @@
     "ethers": "^5.5.3",
     "form-data": "^4.0.0",
     "formidable": "^3.2.1",
+    "hardhat": "^2.9.3",
     "ipfs-http-client": "^55.0.0",
     "multiparty": "^4.2.2",
     "next": "12.1.6",
@@ -49,7 +50,6 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-standard": "^5.0.0",
-    "hardhat": "^2.9.3",
     "hardhat-gas-reporter": "^1.0.8",
     "prop-types": "^15.8.1",
     "solidity-coverage": "^0.7.21"
