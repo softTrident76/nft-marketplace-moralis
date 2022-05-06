@@ -1,30 +1,38 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+const hre = require('hardhat')
+const dotenv = require('dotenv')
+const fs = require('fs')
 
-async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
+function replaceEnvContractAddresses (marketplaceAddress, nftAddress, networkName) {
+  const envFileName = '.env.local'
+  const envFile = fs.readFileSync(envFileName, 'utf-8')
+  const env = dotenv.parse(envFile)
+  env[`MARKETPLACE_CONTRACT_ADDRESS_${networkName}`] = marketplaceAddress
+  env[`NFT_CONTRACT_ADDRESS_${networkName}`] = nftAddress
+  const newEnv = Object.entries(env).reduce((env, [key, value]) => {
+    return `${env}${key}=${value}\n`
+  }, '')
 
-  // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
-
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
+  fs.writeFileSync(envFileName, newEnv)
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+async function main () {
+  process.env.IS_RUNNING = true
+  const Marketplace = await hre.ethers.getContractFactory('Marketplace')
+  const marketplace = await Marketplace.deploy()
+  await marketplace.deployed()
+  console.log('Marketplace deployed to:', marketplace.address)
+
+  const NFT = await hre.ethers.getContractFactory('NFT')
+  const nft = await NFT.deploy(marketplace.address)
+  await nft.deployed()
+  console.log('Nft deployed to:', nft.address)
+
+  replaceEnvContractAddresses(marketplace.address, nft.address, hre.network.name.toUpperCase())
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
