@@ -17,7 +17,7 @@ const contextDefaultValues = {
 }
 
 const networkNames = {
-  maticmum: 'MUMBAI',
+  // maticmum: 'MUMBAI', // default test network
   ropsten:  'ROP',
   unknown: 'LOCALHOST'
 }
@@ -72,7 +72,6 @@ export default function Web3Provider ({ children }) {
       connection.on('chainChanged', initializeWeb3)
     } catch (error) {
       initializeWeb3WithoutSigner()
-      console.log(error)
     }
   }
 

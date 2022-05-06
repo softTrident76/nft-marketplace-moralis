@@ -42,9 +42,9 @@ export default function UnsupportedChain () {
     if (!account) return 'Connect wallet'
 
     const providerTextList = {
-      Metamask: 'Add/Change to Polygon Mumbai Testnet on Metamask',
-      imToken: 'Add/Change to Polygon Mumbai Testnet on imToken',
-      Wallet: 'Add/Change to Polygon Mumbai Testnet on Wallet'
+      Metamask: 'Add/Change to Ropsten Testnet on Metamask',
+      imToken: 'Add/Change to Ropsten Mumbai Testnet on imToken',
+      Wallet: 'Add/Change to Ropsten Mumbai Testnet on Wallet'
     }
     return providerTextList[getProvider()]
   }
