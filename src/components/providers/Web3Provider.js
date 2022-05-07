@@ -18,7 +18,7 @@ const contextDefaultValues = {
 
 const networkNames = {
   // maticmum: 'MUMBAI', // default test network
-  ropsten:  'ROP',
+  ropsten: 'ROPSTEN',
   unknown: 'LOCALHOST'
 }
 
@@ -118,10 +118,11 @@ export default function Web3Provider ({ children }) {
       setNFTContract(null)
       return false
     }
+
     const { data } = await axios(`/api/addresses?network=${networkName}`)
-    const marketplaceContract = new ethers.Contract('0xe706e61d2EBBEaaa5F3d8a0A32e8588f0fD72a10' /*data.marketplaceAddress*/, Market.abi, signer)
+    const marketplaceContract = new ethers.Contract(/*'0xe706e61d2EBBEaaa5F3d8a0A32e8588f0fD72a10'*/data.marketplaceAddress, Market.abi, signer)
     setMarketplaceContract(marketplaceContract)
-    const nftContract = new ethers.Contract('0x766C2D16E5eD2A42E11Ff646f15359547497C00D'/*data.nftAddress*/, NFT.abi, signer)
+    const nftContract = new ethers.Contract(/*'0x766C2D16E5eD2A42E11Ff646f15359547497C00D'*/data.nftAddress, NFT.abi, signer)
     setNFTContract(nftContract)
     return true
   }
